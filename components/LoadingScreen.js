@@ -1,4 +1,4 @@
-import Reimport React, { useEffect } from 'react';
+import React from 'react';
 import { View, ActivityIndicator, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 

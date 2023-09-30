@@ -3,14 +3,14 @@ import { View, Image, Pressable, Animated, Easing, StyleSheet } from 'react-nati
 import { useNavigation } from '@react-navigation/native'; // Add this import
 
 const PasswordPage = () => {
-    const navigation = useNavigation(); // Initialize navigation
+    const navigation = native.useNavigation(); // Initialize navigation
     const [animation] = useState(new Animated.Value(0));
     const [icons, setIcons] = useState([]);
     const [selectedIcons, setSelectedIcons] = useState([]);
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
 
     // Define the correct password icons
-    const correctPasswordIcons = ['icons03', 'icons06', 'icons07', 'icons03'];
+    const correctPasswordIcons = ['icons03.png', 'icons06.png', 'icons07.png', 'icons04.png'];
 
     useEffect(() => {
         // Slide up animation
@@ -87,7 +87,8 @@ const PasswordPage = () => {
     return (
         <View style={styles.container}>
             <Animated.View style={[styles.logoContainer, styles.logoTop]}>
-                <Image source={require('./assets/white_ls.png')} style={styles.logo} />
+                <Image source={require('../assets/icons/icons' + iconName + '.png')}
+ />
             </Animated.View>
 
             <View style={styles.passwordScreen}>
@@ -116,11 +117,11 @@ const PasswordPage = () => {
                         >
                             {({ pressed }) => (
                                 <Image
-                                    source={require(`./assets/icons/icons${iconName}.png`)}
+                                    source = {require(`../assets/icons${iconName}.png`)}
                                     style={[
                                         styles.iconImage,
-                                        pressed && styles.pressedIcon, // Apply custom style when pressed
-                                        iconName === 'correct' && styles.correctIcon, // Style for correct password icon
+                                        pressed && styles.pressedIcon, 
+                                        iconName === 'correct' && styles.correctIcon, 
                                     ]}
                                 />
                             )}
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0b2d4e', // Background color
     },
     logoContainer: {
-        marginTop: 20, // Add spacing between logo and password screen
+        marginTop: 20, 
     },
     logo: {
         width: 100, // Adjust logo size as needed

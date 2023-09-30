@@ -12,7 +12,7 @@ const PasswordCorrectPage = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Image source={require('./assets/white_ls.png')} style={styles.logo} />
+            <Image source={require('../assets/white_ls.png')} style={styles.logo} />
             <Text style={styles.text}>Password Correct</Text>
         </View>
     );
