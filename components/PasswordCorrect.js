@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import warnOnce from './warnOnce'; // Import the warnOnce utility
 
 const PasswordCorrectPage = ({ navigation }) => {
     useEffect(() => {
@@ -9,6 +10,9 @@ const PasswordCorrectPage = ({ navigation }) => {
             // For example: navigation.navigate('HomePage');
         }, 2000); // Adjust the delay time as needed
     }, [navigation]);
+
+    // Deprecation warnings
+    warnOnce(true, 'Image source should be required using `require`.');
 
     return (
         <View style={styles.container}>

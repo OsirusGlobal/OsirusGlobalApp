@@ -1,9 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import warnOnce from './warnOnce'; // Import the warnOnce utility
 
 const PasswordFail = () => {
     const navigation = useNavigation();
+
+    // Use warnOnce for your warnings
+    warnOnce(true, 'This is a warning message about TouchableOpacity.');
 
     return (
         <View style={styles.container}>

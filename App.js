@@ -12,10 +12,26 @@ export default function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="LoadingScreen">
-                <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
-                <Stack.Screen name="PasswordPage" component={PasswordPage} />
-                <Stack.Screen name="PasswordCorrect" component={PasswordCorrect} />
-                <Stack.Screen name="PasswordFail" component={PasswordFail} />
+                <Stack.Screen
+                    name="LoadingScreen"
+                    component={LoadingScreen}
+                    options={{ headerShown: false }} // Hide the header for this screen
+                />
+                <Stack.Screen
+                    name="PasswordPage"
+                    component={PasswordPage}
+                    options={{ headerShown: false }} // Hide the header for this screen
+                />
+                <Stack.Screen
+                    name="PasswordCorrect"
+                    component={PasswordCorrect}
+                    options={{ headerShown: false }} // Hide the header for this screen
+                />
+                <Stack.Screen
+                    name="PasswordFail"
+                    component={PasswordFail}
+                    options={{ headerShown: false }} // Hide the header for this screen
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );

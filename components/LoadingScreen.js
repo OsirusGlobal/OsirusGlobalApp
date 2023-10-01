@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
-import { View, ActivityIndicator, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { ActivityIndicator } from 'react-native-paper';
+import warnOnce from './warnOnce'; // Import the warnOnce utility
 
 const LoadingScreen = () => {
     const navigation = useNavigation();
@@ -11,6 +13,9 @@ const LoadingScreen = () => {
             navigation.replace('PasswordPage'); // Redirect to PasswordPage
         }, 3000); // Adjust the delay time as needed
     }, [navigation]);
+
+    // Deprecation warnings
+    warnOnce(true, 'ActivityIndicator is deprecated. Use ActivityIndicator from react-native-paper.');
 
     return (
         <View style={styles.container}>
@@ -23,7 +28,7 @@ const LoadingScreen = () => {
                 />
             </View>
             {/* Activity Indicator (loading spinner) */}
-            <ActivityIndicator size="large" color="#FFFFFF" />
+            <ActivityIndicator animating={true} size="large" color="#FFFFFF" />
         </View>
     );
 };

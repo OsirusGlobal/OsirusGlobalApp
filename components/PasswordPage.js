@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, Pressable, Animated, Easing, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import warnOnce from './warnOnce'; // Import the warnOnce utility
 
-const PasswordPage = () => {
+// Define the correct password icons
+const correctPasswordIcons = ['icons03', 'icons06', 'icons07', 'icons03'];
+
+// Function to generate random icons
+function generateRandomIcons() {
+    const shuffledIcons = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
+    shuffleArray(shuffledIcons);
+    return shuffledIcons;
+}
+
+// Shuffle an array in-place
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const PasswordPage = ({ styleMode, tintColour, resizeMode, boxShadow }) => {
     const navigation = useNavigation();
     const [animation] = useState(new Animated.Value(0));
     const [icons, setIcons] = useState([]);
     const [selectedIcons, setSelectedIcons] = useState([]);
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
-
-    // Define the correct password icons
-    const correctPasswordIcons = ['icons03', 'icons06', 'icons07', 'icons03'];
-    // Function to generate random icons
-
-    const generateRandomIcons = () => {
-        const shuffledIcons = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
-        shuffleArray(shuffledIcons);
-        return shuffledIcons;
-    };
 
     useEffect(() => {
         // Slide up animation
@@ -28,18 +37,18 @@ const PasswordPage = () => {
             useNativeDriver: false,
         }).start();
 
-        // Initialize icons when showing password screen
+        // Initialize icons when showing the password screen
         setIcons(generateRandomIcons());
+
+        // Use warnOnce for your warnings
+        warnOnce(true, 'This is a warning message about ActivityIndicator.');
+        warnOnce(true, 'This is a warning message about "transform" style.');
+        warnOnce(true, 'This is a warning message about accessibilityLabel.');
+        warnOnce(true, 'This is a warning message about focusable.');
+        warnOnce(true, 'This is a warning message about TouchableOpacity.');
     }, []);
 
     useEffect(() => {
-        // Function to generate random icons
-        function generateRandomIcons() {
-            const shuffledIcons = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
-            shuffleArray(shuffledIcons);
-            return shuffledIcons;
-        }
-
         // Shuffle icons every 4 seconds
         const shuffleInterval = setInterval(() => {
             setIcons(generateRandomIcons());
@@ -47,13 +56,6 @@ const PasswordPage = () => {
 
         return () => clearInterval(shuffleInterval);
     }, []);
-
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
 
     function handleIconPress(index) {
         if (selectedIcons.length < 4) {
@@ -91,10 +93,88 @@ const PasswordPage = () => {
         }
     }, [selectedIcons, navigation]);
 
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor: styleMode === 'dark' ? '#0b2d4e' : 'white', // Background color
+            ...boxShadow,
+        },
+        logoContainer: {
+            marginTop: 20, // Add spacing between logo and password screen
+        },
+        logo: {
+            width: 100, // Adjust logo size as needed
+            height: 100, // Adjust logo size as needed
+            tintColor: tintColour, // Apply the tint color to the logo
+            resizeMode: resizeMode, // Set the resizeMode
+            transform: 'scaleX(2) rotateX(15deg)', // Apply transform using space-separated string functions
+        },
+        logoTop: {
+            marginBottom: 20, // Add spacing between logo and password screen
+        },
+        passwordScreen: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        boxContainer: {
+            flexDirection: 'row',
+        },
+        box: {
+            width: 40,
+            height: 40,
+            margin: 5,
+            borderWidth: 1,
+            borderColor: styleMode === 'dark' ? '#0b2d4e' : 'gray',
+        },
+        selectedBox: {
+            backgroundColor: styleMode === 'dark' ? '#FFFFFF' : 'blue',
+        },
+        correctBox: {
+            backgroundColor: styleMode === 'dark' ? 'green' : 'lightgreen', // Change to your desired correct password box color
+        },
+        wrongBox: {
+            backgroundColor: styleMode === 'dark' ? 'red' : 'pink', // Change to your desired wrong password box color
+        },
+        iconsContainer: {
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            marginTop: 20, // Add spacing between boxes and icons
+        },
+        icon: {
+            width: 80,
+            height: 80,
+            margin: 5,
+            borderWidth: 1,
+            borderColor: styleMode === 'dark' ? '#FFFFFF' : 'gray',
+            alignItems: 'center',
+            justifyContent: 'center',
+            pointerEvents: 'auto', // Use style.pointerEvents
+        },
+        iconImage: {
+            width: 60, // Adjust icon image size as needed
+            height: 60, // Adjust icon image size as needed
+        },
+        pressedIcon: {
+            borderColor: styleMode === 'dark' ? 'blue' : 'lightblue', // Change to your desired pressed icon border color
+        },
+        correctIcon: {
+            borderColor: styleMode === 'dark' ? 'green' : 'lightgreen', // Change to your desired correct icon border color
+        },
+    });
+
     return (
         <View style={styles.container}>
             <Animated.View style={[styles.logoContainer, styles.logoTop]}>
-                <Image source={require('../assets/white_ls.png')} style={styles.logo} />
+                <Image
+                    source={require('../assets/white_ls.png')}
+                    style={styles.logo}
+                    tintColor={tintColour} // Apply the tint color as a prop
+                    resizeMode={resizeMode} // Set the resizeMode as a prop
+                    aria-label="Password Logo"
+                />
             </Animated.View>
 
             <View style={styles.passwordScreen}>
@@ -120,15 +200,20 @@ const PasswordPage = () => {
                             key={index}
                             style={styles.icon}
                             onPress={() => handleIconPress(index)}
+                            role="button"
+                            pointerEvents="auto"
                         >
                             {({ pressed }) => (
                                 <Image
                                     source={require(`../assets/icons/icons${iconName}.png`)}
                                     style={[
                                         styles.iconImage,
-                                        pressed && styles.pressedIcon, // Apply custom style when pressed
-                                        iconName === 'correct' && styles.correctIcon, // Style for correct password icon
+                                        pressed && styles.pressedIcon,
+                                        iconName === 'correct' && styles.correctIcon,
                                     ]}
+                                    tintColor={tintColour} // Apply the tint color as a prop
+                                    resizeMode={resizeMode} // Set the resizeMode as a prop
+                                    aria-label={`Icon ${index}`}
                                 />
                             )}
                         </Pressable>
@@ -138,72 +223,5 @@ const PasswordPage = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#0b2d4e', // Background color
-    },
-    logoContainer: {
-        marginTop: 20, // Add spacing between logo and password screen
-    },
-    logo: {
-        width: 100, // Adjust logo size as needed
-        height: 100, // Adjust logo size as needed
-    },
-    logoTop: {
-        marginBottom: 20, // Add spacing between logo and password screen
-    },
-    passwordScreen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    boxContainer: {
-        flexDirection: 'row',
-    },
-    box: {
-        width: 40,
-        height: 40,
-        margin: 5,
-        borderWidth: 1,
-        borderColor: '#0b2d4e',
-    },
-    selectedBox: {
-        backgroundColor: '#FFFFFF',
-    },
-    correctBox: {
-        backgroundColor: 'green', // Change to your desired correct password box color
-    },
-    wrongBox: {
-        backgroundColor: 'red', // Change to your desired wrong password box color
-    },
-    iconsContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        marginTop: 20, // Add spacing between boxes and icons
-    },
-    icon: {
-        width: 80,
-        height: 80,
-        margin: 5,
-        borderWidth: 1,
-        borderColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    iconImage: {
-        width: 60, // Adjust icon image size as needed
-        height: 60, // Adjust icon image size as needed
-    },
-    pressedIcon: {
-        borderColor: 'blue', // Change to your desired pressed icon border color
-    },
-    correctIcon: {
-        borderColor: 'green', // Change to your desired correct icon border color
-    },
-});
 
 export default PasswordPage;
