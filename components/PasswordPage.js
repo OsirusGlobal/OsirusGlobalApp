@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, Pressable, Animated, Easing, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Add this import
+import { useNavigation } from '@react-navigation/native';
 
 const PasswordPage = () => {
-    const navigation = native.useNavigation(); // Initialize navigation
+    const navigation = useNavigation();
     const [animation] = useState(new Animated.Value(0));
     const [icons, setIcons] = useState([]);
     const [selectedIcons, setSelectedIcons] = useState([]);
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
 
     // Define the correct password icons
-    const correctPasswordIcons = ['icons03.png', 'icons06.png', 'icons07.png', 'icons04.png'];
+    const correctPasswordIcons = ['icons03', 'icons06', 'icons07', 'icons03'];
+    // Function to generate random icons
+
+    const generateRandomIcons = () => {
+        const shuffledIcons = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
+        shuffleArray(shuffledIcons);
+        return shuffledIcons;
+    };
 
     useEffect(() => {
         // Slide up animation
@@ -82,13 +89,12 @@ const PasswordPage = () => {
                 }, 2000); // Adjust the delay time as needed
             }
         }
-    }, [selectedIcons]);
+    }, [selectedIcons, navigation]);
 
     return (
         <View style={styles.container}>
             <Animated.View style={[styles.logoContainer, styles.logoTop]}>
-                <Image source={require('../assets/icons/icons' + iconName + '.png')}
- />
+                <Image source={require('../assets/white_ls.png')} style={styles.logo} />
             </Animated.View>
 
             <View style={styles.passwordScreen}>
@@ -117,11 +123,11 @@ const PasswordPage = () => {
                         >
                             {({ pressed }) => (
                                 <Image
-                                    source = {require(`../assets/icons${iconName}.png`)}
+                                    source={require(`../assets/icons/icons${iconName}.png`)}
                                     style={[
                                         styles.iconImage,
-                                        pressed && styles.pressedIcon, 
-                                        iconName === 'correct' && styles.correctIcon, 
+                                        pressed && styles.pressedIcon, // Apply custom style when pressed
+                                        iconName === 'correct' && styles.correctIcon, // Style for correct password icon
                                     ]}
                                 />
                             )}
@@ -140,7 +146,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0b2d4e', // Background color
     },
     logoContainer: {
-        marginTop: 20, 
+        marginTop: 20, // Add spacing between logo and password screen
     },
     logo: {
         width: 100, // Adjust logo size as needed
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
         height: 40,
         margin: 5,
         borderWidth: 1,
-        borderColor: '#FFFFFF',
+        borderColor: '#0b2d4e',
     },
     selectedBox: {
         backgroundColor: '#FFFFFF',
@@ -201,4 +207,3 @@ const styles = StyleSheet.create({
 });
 
 export default PasswordPage;
-
